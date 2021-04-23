@@ -1,7 +1,9 @@
-import react from 'react'
+import React,{ useState, useEffect } from 'react'
 import ContactForm from './contactForm'
 import firebaseDB from '../firebase'
 const Contact = () => {
+
+    
 
     const addOrEdit = (obj)=>{
         firebaseDB.child('contacts').push(obj, (err)=>{
@@ -23,7 +25,17 @@ const Contact = () => {
                     <ContactForm addOrEdit={addOrEdit}/>
                 </div>
                 <div className='col-md-7'>
-                    <div>List of Contacts</div>
+                    <table className='table table-borderless table-stripped'>
+                        <thead className='thead-light'>
+                            <tr>
+                                <th>Full Name</th>
+                                <th>Mobile</th>
+                                <th>Email</th>
+                                <th>Address</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                    </table>
                 </div>
             </div>
         </>
