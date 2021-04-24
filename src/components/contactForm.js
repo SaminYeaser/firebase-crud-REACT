@@ -1,4 +1,4 @@
-import react, {useEffect, useState} from 'react'
+import React, {useEffect, useState} from 'react'
 const ContactForm = (props) => {
     const initialVlaues = {
         fullName:'',
@@ -7,10 +7,26 @@ const ContactForm = (props) => {
         address:''
     }
     var [values,setValues] = useState(initialVlaues)
+    
+    //for accessing the data of the firebase 
+    //in the form
+
+    useEffect(()=>{
+        if(props.currentId === '')
+            setValues({
+                ...initialVlaues
+            })
+        else
+            setValues({
+                ...props.contactObject[props.currentId]
+            })
+        
+    },[props.currentId, props.contactObject])
 
     // for store the data in form input
 
     const handleInputChange = (e)=>{
+        e.preventDefault()
         var { name, value }=e.target
         setValues({
             ...values,
@@ -73,7 +89,7 @@ const ContactForm = (props) => {
                     {/* for button */}
 
                     <div className='form-group'>
-                        <input type="submit" value='Save' className='btn btn-primary btn-block'/>
+                        <input type="submit" value={props.currentId === ''?'Save':'Update'} className='btn btn-primary btn-block'/>
                     </div>
             </form>
         </div>
