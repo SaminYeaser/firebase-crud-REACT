@@ -19,11 +19,23 @@ const Contact = () => {
     //adding data in firebase
 
     const addOrEdit = (obj)=>{
+        if(currentId === ''){
         firebaseDB.child('contacts').push(obj, (err)=>{
             if(err){
                 console.log(err)
+            }else{
+                setCurrentId('')
             }
         })
+    }else{
+        firebaseDB.child(`contacts/${currentId}`).set(obj, (err)=>{
+            if(err){
+                console.log(err)
+            }else{
+                setCurrentId('')
+            }
+        })
+    }
     }
 
     return ( 
